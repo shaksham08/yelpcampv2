@@ -22,15 +22,28 @@ db.once("open", function () {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 app.get("/", (req, res) => {
   res.render("index");
 });
 
 app.get("/campgrounds", async (req, res) => {
   const campgrounds = await Campground.find({});
+  res.render("campground/index", { campgrounds });
 });
 
-app.get();
+app.get("/campgrounds/new", (req, res) => {
+  res.render("campground/new");
+});
+
+app.post("/campgrounds", async (req, res) => {
+  const { title, description, location, price } = req.body;
+  const newCampground = new Campground({ title, description, location, price });
+  await newCampground.save();
+  res.redirect("/campgrounds");
+});
 
 const PORT = 1234;
 app.listen(PORT, function () {
