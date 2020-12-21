@@ -6,6 +6,9 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>Welcome to Campground</h1>
+    <h1>This is from index of campground</h1>
+      <% for(let i=0;i<campgrounds.length;i++ ){ %>
+        <li><%= campgrounds[i].title  %> </li>
+        <% } %>  
   </body>
 </html>

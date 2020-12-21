@@ -1,4 +1,4 @@
-const mongoose = require("mongooses");
+const mongoose = require("mongoose");
 
 //Defining The Campground Schema
 const CampgroundSchema = new mongoose.Schema({
