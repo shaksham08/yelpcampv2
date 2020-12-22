@@ -6,9 +6,12 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>This is from index of campground</h1>
+    <h1>All campgrounds</h1>
+    <h2> <a href="/campgrounds/new">Create New Campground</a> </h2>
+    <div>
       <% for(let i=0;i<campgrounds.length;i++ ){ %>
-        <li><%= campgrounds[i].title  %> </li>
+        <li> <a href="/campgrounds/<%=campgrounds[i]._id%>"> <%= campgrounds[i].title  %> </a></li>
         <% } %>  
+     </div>
   </body>
 </html>
