@@ -9,6 +9,7 @@ const app = express();
 mongoose.connect("mongodb://localhost:27017/yelp-camp", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 });
 
 const db = mongoose.connection;
@@ -58,7 +59,14 @@ app.post("/campgrounds", async (req, res) => {
 });
 
 app.patch("/campgrounds/:id", async (req, res) => {
-  res.send("PATCH REQUEST");
+  const { title, location } = req.body.campground;
+  await Campground.findByIdAndUpdate(req.params.id, { title, location });
+  res.redirect(`/campgrounds/${req.params.id}`);
+});
+
+app.delete("/campgrounds/:id", async (req, res) => {
+  await Campground.findByIdAndDelete(req.params.id);
+  res.redirect("/campgrounds");
 });
 
 const PORT = 1234;
