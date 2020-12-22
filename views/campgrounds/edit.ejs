@@ -6,7 +6,7 @@
     <title>Edit Campground</title>
   </head>
   <body>
-    <form action="/campgrounds?_method=PATCH" method="POST">
+    <form action="/campgrounds/<%=campground._id%>?_method=PATCH" method="POST">
       <div>
         <label for="title">Title</label>
         <input
