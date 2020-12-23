@@ -1,35 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Campground</title>
-  </head>
-  <body>
-    <form action="/campgrounds/<%=campground._id%>?_method=PATCH" method="POST">
-      <div>
-        <label for="title">Title</label>
-        <input
-          id="title"
-          type="text"
-          placeholder="title"
-          name="campground[title]"
-          value="<%=campground.title%>"
-        />
-      </div>
-      <div>
-        <label for="location">Location</label>
-        <input
-          type="text"
-          placeholder="location"
-          name="campground[location]"
-          value="<%= campground.location  %> "
-        />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
-    <div>
-      <button><a href="/campgrounds">All campgrounds</a></button>
-    </div>
-  </body>
-</html>
+<% layout('/layouts/boilerplate') -%>
+<form action="/campgrounds/<%=campground._id%>?_method=PATCH" method="POST">
+  <div>
+    <label for="title">Title</label>
+    <input
+      id="title"
+      type="text"
+      placeholder="title"
+      name="campground[title]"
+      value="<%=campground.title%>"
+    />
+  </div>
+  <div>
+    <label for="location">Location</label>
+    <input
+      type="text"
+      placeholder="location"
+      name="campground[location]"
+      value="<%= campground.location  %> "
+    />
+  </div>
+  <button type="submit">Submit</button>
+</form>
+<div>
+  <button><a href="/campgrounds">All campgrounds</a></button>
+</div>
