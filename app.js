@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const Campground = require("./models/campground");
-var methodOverride = require("method-override");
+const methodOverride = require("method-override");
 const engine = require("ejs-mate");
 
 const app = express();
