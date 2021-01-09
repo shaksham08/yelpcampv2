@@ -17,6 +17,12 @@ const CampgroundSchema = new mongoose.Schema({
   image: {
     type: String,
   },
+  reviews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
 });
 
 //Creating a Model From that Schema
