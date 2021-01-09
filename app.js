@@ -6,7 +6,10 @@ const ExpressError = require("./utils/ExpressError");
 const Campground = require("./models/campground");
 const methodOverride = require("method-override");
 const engine = require("ejs-mate");
-const campgroundsSchema = require("./models/validation/campgroundSchema");
+const campgroundsSchema = require("./models/validation/Schemas");
+const reviewsSchema = require("./models/validation/Schemas");
+const Review = require("./models/Review");
+
 const app = express();
 
 mongoose.connect("mongodb://localhost:27017/yelp-camp", {
@@ -33,6 +36,17 @@ app.engine("ejs", engine);
 
 const validateCampground = (req, res, next) => {
   const result = campgroundsSchema.validate(req.body);
+  if (result.error) {
+    throw new ExpressError(
+      result.error.details.map((el) => el.message).join(","),
+      500
+    );
+  }
+  next();
+};
+
+const validateReview = (req, res, next) => {
+  const result = reviewsSchema.validate(req.body);
   if (result.error) {
     throw new ExpressError(
       result.error.details.map((el) => el.message).join(","),
@@ -72,7 +86,9 @@ app.post(
 app.get(
   "/campgrounds/:id",
   catchAsync(async (req, res, next) => {
-    const campground = await Campground.findById(req.params.id);
+    const campground = await Campground.findById(req.params.id).populate(
+      "reviews"
+    );
     res.render("campgrounds/show", { campground });
   })
 );
@@ -99,6 +115,19 @@ app.delete(
   catchAsync(async (req, res, next) => {
     await Campground.findByIdAndDelete(req.params.id);
     res.redirect("/campgrounds");
+  })
+);
+
+app.post(
+  "/campgrounds/:id/reviews",
+  validateReview,
+  catchAsync(async (req, res, next) => {
+    const campground = await Campground.findById(req.params.id);
+    const review = new Review(req.body.review);
+    campground.reviews.push(review);
+    await review.save();
+    await campground.save();
+    res.redirect(`/campgrounds/${req.params.id}`);
   })
 );
 
