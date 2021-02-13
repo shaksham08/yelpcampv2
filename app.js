@@ -3,6 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
+const session = require("express-session");
 const ejsMate = require("ejs-mate");
 const Campgorunds = require("./routes/campgrounds");
 const Reviews = require("./routes/reviews");
@@ -22,14 +23,26 @@ db.once("open", function () {
   console.log("Database Connected");
 });
 
+const sessionConfig = {
+  secret: "thisshouldbeasecret",
+  resave: false,
+  saveUninititalized: true,
+  cookie: {
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+};
+
 //Assigns setting name to value. You may store any value that you want, but certain names can be used to configure the behavior of the server.
 app.set("view engine", "ejs");
 app.engine("ejs", ejsMate);
 app.set("views", path.join(__dirname, "views"));
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(methodOverride("_method"));
+app.use(session(sessionConfig));
 
 //All router
 app.use("/", Campgorunds);
