@@ -35,7 +35,8 @@ router.post(
   catchAsync(async (req, res, next) => {
     const newCampground = new Campground(req.body.campground);
     await newCampground.save();
-    res.redirect("/campgrounds");
+    req.flash("success", "Sucessfully created new campground");
+    res.redirect(`/campgrounds/${newCampground._id}`);
   })
 );
 
@@ -45,6 +46,12 @@ router.get(
     const campground = await Campground.findById(req.params.id).populate(
       "reviews"
     );
+    //TODO: Why we need this as already we are handling errors
+    //why when we try to visit any id we get another error and once delete and then visit hen we get different errior
+    if (!campground) {
+      req.flash("error", "Cannot find that campground!");
+      return res.redirect("/campgrounds");
+    }
     res.render("campgrounds/show", { campground });
   })
 );
@@ -53,6 +60,10 @@ router.get(
   "/campgrounds/:id/edit",
   catchAsync(async (req, res, next) => {
     const campground = await Campground.findById(req.params.id);
+    if (!campground) {
+      req.flash("error", "Cannot find that campground!");
+      return res.redirect("/campgrounds");
+    }
     res.render("campgrounds/edit", { campground });
   })
 );
@@ -62,6 +73,7 @@ router.patch(
   validateCampground,
   catchAsync(async (req, res, next) => {
     await Campground.findByIdAndUpdate(req.params.id, req.body.campground);
+    req.flash("success", "Sucessfully updated the campground");
     res.redirect(`/campgrounds/${req.params.id}`);
   })
 );
@@ -70,6 +82,7 @@ router.delete(
   "/campgrounds/:id",
   catchAsync(async (req, res, next) => {
     await Campground.findByIdAndDelete(req.params.id);
+    req.flash("success", "Successfully deleted campground");
     res.redirect("/campgrounds");
   })
 );

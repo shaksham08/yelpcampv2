@@ -5,6 +5,7 @@ const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
 const session = require("express-session");
 const ejsMate = require("ejs-mate");
+const flash = require("connect-flash");
 const Campgorunds = require("./routes/campgrounds");
 const Reviews = require("./routes/reviews");
 
@@ -26,7 +27,7 @@ db.once("open", function () {
 const sessionConfig = {
   secret: "thisshouldbeasecret",
   resave: false,
-  saveUninititalized: true,
+  saveUninitialized: true,
   cookie: {
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     httpOnly: true,
@@ -43,6 +44,14 @@ app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(methodOverride("_method"));
 app.use(session(sessionConfig));
+app.use(flash());
+
+app.use((req, res, next) => {
+  //TODO: Check why we use this res.locals here
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
 
 //All router
 app.use("/", Campgorunds);

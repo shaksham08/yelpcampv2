@@ -25,12 +25,13 @@ router.post(
     campground.reviews.push(review);
     await review.save();
     await campground.save();
+    req.flash("success", "Sucessfully created new review");
     res.redirect(`/campgrounds/${req.params.id}`);
   })
 );
 
 router.delete(
-  "/:reviewId",
+  "/reviews/:reviewId",
   catchAsync(async (req, res, next) => {
     const { id, reviewId } = req.params;
     await Campground.findByIdAndUpdate(id, {
