@@ -8,6 +8,9 @@ const ejsMate = require("ejs-mate");
 const flash = require("connect-flash");
 const Campgorunds = require("./routes/campgrounds");
 const Reviews = require("./routes/reviews");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
 
 //inititalizing express
 const app = express();
@@ -16,6 +19,7 @@ mongoose.connect("mongodb://localhost:27017/yelp-camp", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
+  useCreateIndex: true,
 });
 
 const db = mongoose.connection;
@@ -45,6 +49,12 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 app.use(methodOverride("_method"));
 app.use(session(sessionConfig));
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser()); // how to store in session
+passport.deserializeUser(User.deserializeUser()); // how to delete from session
 
 app.use((req, res, next) => {
   //TODO: Check why we use this res.locals here
@@ -53,9 +63,9 @@ app.use((req, res, next) => {
   next();
 });
 
-//All router
 app.use("/", Campgorunds);
 app.use("/campgrounds/:id", Reviews);
+
 app.get("/", (req, res) => {
   res.render("home");
 });
