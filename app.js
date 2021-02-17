@@ -6,11 +6,13 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const ejsMate = require("ejs-mate");
 const flash = require("connect-flash");
-const Campgorunds = require("./routes/campgrounds");
-const Reviews = require("./routes/reviews");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+
+const userRoutes = require("./routes/users");
+const campgorundRoutes = require("./routes/campgrounds");
+const revieRoutes = require("./routes/reviews");
 
 //inititalizing express
 const app = express();
@@ -63,8 +65,18 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", Campgorunds);
-app.use("/campgrounds/:id", Reviews);
+app.get("/fakeuser", async (req, res) => {
+  const user = new User({
+    email: "shaksham@gmail.com",
+    username: "shaksham",
+  });
+  const newUser = await User.register(user, "chicken");
+  res.send(newUser);
+});
+
+app.use("/", campgorundRoutes);
+app.use("/campgrounds/:id", revieRoutes);
+app.use("/", userRoutes);
 
 app.get("/", (req, res) => {
   res.render("home");
