@@ -60,8 +60,14 @@ passport.deserializeUser(User.deserializeUser()); // how to delete from session
 
 app.use((req, res, next) => {
   //TODO: Check why we use this res.locals here
+  /*
+    without this we have not to add this to every template but now using this 
+    we can pass it to every template. its just like a global way of setting things up
+  */
+
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+  res.locals.currentUser = req.user;
   next();
 });
 
