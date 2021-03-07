@@ -18,4 +18,3 @@
     );
   });
 })();
-console.log("check")
