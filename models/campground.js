@@ -24,6 +24,10 @@ const CampgroundSchema = new mongoose.Schema({
       ref: "Review",
     },
   ],
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 //Deleting all reviews once the campground is deleted
