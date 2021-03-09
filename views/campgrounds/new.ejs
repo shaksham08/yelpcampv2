@@ -8,6 +8,7 @@
       novalidate
       class="validated-form"
       novalidate
+      enctype="multipart/form-data"
     >
       <div class="mb-3">
         <label for="title" class="form-label font-monospace">Title</label>
@@ -34,7 +35,9 @@
         <div class="invalid-feedback">This field is required</div>
       </div>
 
-      <div class="mb-3">
+      <input type="file" name="image" id="image" multiple />
+
+      <!-- <div class="mb-3">
         <label for="image" class="form-label font-monospace">Image Url</label>
         <input
           type="text"
@@ -45,7 +48,7 @@
         />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">This field is required</div>
-      </div>
+      </div> -->
 
       <div class="mb-3">
         <label for="price" class="font-monospace form-label font-monospace"

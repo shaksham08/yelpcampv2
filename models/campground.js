@@ -15,9 +15,12 @@ const CampgroundSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
-  image: {
-    type: String,
-  },
+  images: [
+    {
+      url: String,
+      filename: String,
+    },
+  ],
   reviews: [
     {
       type: mongoose.Schema.Types.ObjectId,

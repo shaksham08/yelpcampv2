@@ -11,7 +11,7 @@ router
   .post(validateUser, catchAsync(users.register));
 
 router
-  .route("login")
+  .route("/login")
   .get(users.renderLogin)
   .post(
     passport.authenticate("local", {
