@@ -64,7 +64,7 @@ const sessionConfig = {
   cookie: {
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     httpOnly: true,
-    secure: true,
+    // secure: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
 };
@@ -85,6 +85,7 @@ app.use(
 app.use(helmet());
 
 const scriptSrcUrls = [
+  "https://stackpath.bootstrapcdn.com/",
   "https://cdn.jsdelivr.net",
   "https://api.tiles.mapbox.com/",
   "https://api.mapbox.com/",
@@ -93,6 +94,7 @@ const scriptSrcUrls = [
   "https://cdn.jsdelivr.net",
 ];
 const styleSrcUrls = [
+  "https://stackpath.bootstrapcdn.com/",
   "https://kit-free.fontawesome.com/",
   "https://cdn.jsdelivr.net",
   "https://api.mapbox.com/",
@@ -101,6 +103,7 @@ const styleSrcUrls = [
   "https://use.fontawesome.com/",
 ];
 const connectSrcUrls = [
+  "https://stackpath.bootstrapcdn.com/",
   "https://api.mapbox.com/",
   "https://a.tiles.mapbox.com/",
   "https://b.tiles.mapbox.com/",
