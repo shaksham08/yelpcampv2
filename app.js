@@ -64,7 +64,7 @@ const sessionConfig = {
   cookie: {
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     httpOnly: true,
-    // secure: true,
+    secure: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
 };
@@ -157,7 +157,7 @@ app.use((err, req, res, next) => {
   res.status(err.statusCode).render("error", { err });
 });
 
-const PORT = 1234;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {
   console.log(`The server is running at port : ${PORT}`);
 });
