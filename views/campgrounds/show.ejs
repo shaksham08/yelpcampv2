@@ -3,6 +3,7 @@
 <div class="row">
   
   <div class="col-6">
+   
      <div id="campgroundCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <% campground.images.forEach((img, i) => {  %>
@@ -63,6 +64,7 @@
   </div>
 
    <div class="col-6">
+      <div id='map' class="mb-3" style='width: 100%; height: 300px;'></div>
      <% if(currentUser){ %>
         <h2 class="mb-3">Leave a Review</h2>
         <form action="/campgrounds/<%=campground._id%>/reviews" method="POST" class="mb-3 validated-form" novalidate>
@@ -96,7 +98,7 @@
         <div class="card mb-3 ">
             <div class="card-body">
                 <h5 class="card-title"><%= review.author.username %></h5>
-                <h3>Rated element name</h3>
+                
                   <p class="starability-result" data-rating="<%= review.rating %>">
                     Rated: <%= review.rating %> stars
                   </p>
@@ -109,12 +111,14 @@
                 <% } %>
             </div>
         </div>
-        <% } %>
-
-       
+        <% } %>  
     </div>
 </div>
-
-  
 </div>
+<script>  
+  const mapToken = "<%-process.env.MAPBOX_TOKEN%>";
+  const campground = <%- JSON.stringify(campground) %>
+  console.log(campground.geometry)
+</script>
+<script src="/javascript/showPageMap.js"></script>
 
