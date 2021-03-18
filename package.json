@@ -2,7 +2,7 @@
   "name": "yempcamp",
   "version": "1.0.0",
   "main": "app.js",
-  "author": "shaksham",
+  "author": "shakshamsinha",
   "license": "MIT",
   "dependencies": {
     "@mapbox/mapbox-sdk": "^0.12.1",
