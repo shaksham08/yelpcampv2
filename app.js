@@ -24,7 +24,8 @@ const revieRoutes = require("./routes/reviews");
 //inititalizing express
 const app = express();
 
-const DB_URL = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
+//const DB_URL = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
+const DB_URL = "mongodb://localhost:27017/yelp-camp";
 const secret = process.env.SECRET || "thisismysecret";
 
 mongoose.connect(DB_URL, {
@@ -109,6 +110,7 @@ const connectSrcUrls = [
   "https://b.tiles.mapbox.com/",
   "https://events.mapbox.com/",
 ];
+
 const fontSrcUrls = [];
 app.use(
   helmet.contentSecurityPolicy({
