@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Review = require("./Review");
 
-const opts = { toJSON: { virtuals: true } };
+const opts = { toJSON: { virtuals: true }, timestamps: true };
 
 const ImageSchema = new mongoose.Schema({
   url: String,

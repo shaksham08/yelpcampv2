@@ -1,9 +1,7 @@
 <% layout('/layouts/boilerplate') -%>
 <link rel="stylesheet" href="/stylesheets/stars.css">
 <div class="row">
-  
   <div class="col-6">
-   
      <div id="campgroundCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <% campground.images.forEach((img, i) => {  %>
@@ -11,7 +9,6 @@
                     <img src="<%= img.url%>" class="d-block w-100" alt="">
                 </div>
                 <% }) %>
-
             </div>
             <% if(campground.images.length > 1) {%>
             <button style="border: none;background: none;" class="carousel-control-prev" type="button" data-bs-target="#campgroundCarousel"  data-bs-slide="prev">
@@ -58,7 +55,7 @@
       </div>
       <% } %>
     
-      <div class="card-footer text-muted">2 days ago</div>
+      <div class="card-footer text-muted"><%=campground.createdAt%></div>
     </div>
     
   </div>
